@@ -26,7 +26,7 @@ public class JwtProvider : ITokenProvider
         if (string.IsNullOrEmpty(audienciaValida))
             throw new ArgumentException("Audiência válida para transmissão de tokens não configurada");
 
-        dataExpiracaoJwt = DateTime.Now.AddDays(3);
+        dataExpiracaoJwt = DateTime.UtcNow.AddMinutes(5);
     }
 
     public IAccessToken GerarTokenDeAcesso(Usuario usuario)
@@ -45,11 +45,12 @@ public class JwtProvider : ITokenProvider
                 new Claim(JwtRegisteredClaimNames.Email, usuario.Email!),
                 new Claim(JwtRegisteredClaimNames.UniqueName, usuario.UserName!)
             }),
-            Expires = dataExpiracaoJwt,
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(chaveEmBytes),
                 SecurityAlgorithms.HmacSha256Signature
-            )
+            ),
+            Expires = dataExpiracaoJwt,
+            NotBefore = DateTime.UtcNow
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);

@@ -55,7 +55,8 @@ public static class AuthDependencyInjection
                 ValidIssuer = "OrganizaMed",
                 ValidateAudience = true,
                 ValidateIssuer = true,
-                ValidateLifetime = true
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.FromSeconds(10)
             };
         });
     }
