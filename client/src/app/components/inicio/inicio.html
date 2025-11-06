@@ -1,0 +1,95 @@
+<mat-card>
+  <mat-card-content>
+    <div class="grid grid-cols-1 lg:grid-cols-12 items-center justify-center gap-3 p-3">
+      <div class="lg:col-span-10">
+        <h3 class="text-2xl font-medium">
+          Organize sua rotina médica com eficiência com o OrganizaMed
+        </h3>
+
+        <p class="mt-4 text-base">
+          O OrganizaMed foi desenvolvido para profissionais da saúde que precisam de agilidade no
+          dia a dia. Registre prontuários, acompanhe pacientes, acesse informações rapidamente e
+          mantenha tudo centralizado em um único sistema — seguro, intuitivo e acessível de qualquer
+          lugar.
+        </p>
+
+        <ul class="text-sm list-disc ps-8 mt-4">
+          <li class="text-base">🩺 Cadastre, atualize e consulte médicos e especialidades.</li>
+          <li class="text-base">👨‍⚕️ Gerencie pacientes e histórico clínico com praticidade.</li>
+          <li class="text-base">📅 Controle atividades médicas, procedimentos e atendimentos.</li>
+          <li class="text-base">🔒 Armazene dados com segurança e sigilo profissional.</li>
+        </ul>
+
+        <p class="mt-4 text-base">
+          Comece agora e eleve a qualidade da sua gestão clínica, com mais tempo para focar no que
+          importa: o cuidado com os pacientes.
+        </p>
+      </div>
+
+      <div class="lg:col-span-2">
+        <img class="max-w-full h-auto" src="/img/inicio.svg" alt="Uma equipe de médicos." />
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 my-2">
+  <mat-card class="classroom-card">
+    <a
+      routerLink="/medicos"
+      class="card-hero block"
+      style="--hero-url: url('/img/card-header.webp')"
+    >
+      <mat-card-title class="card-hero__title">Médicos</mat-card-title>
+    </a>
+
+    <mat-card-content></mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions class="flex justify-end">
+      <a routerLink="/medicos" mat-icon-button matTooltip="Ir para Médicos">
+        <mat-icon>arrow_outward</mat-icon>
+      </a>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="classroom-card">
+    <a
+      routerLink="/pacientes"
+      class="card-hero block"
+      style="--hero-url: url('/img/card-header.webp')"
+    >
+      <mat-card-title class="card-hero__title">Pacientes</mat-card-title>
+    </a>
+
+    <mat-card-content></mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions class="flex justify-end">
+      <a routerLink="/pacientes" mat-icon-button matTooltip="Ir para Pacientes">
+        <mat-icon>arrow_outward</mat-icon>
+      </a>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="classroom-card">
+    <a
+      routerLink="/atividades-medicas"
+      class="card-hero block"
+      style="--hero-url: url('/img/card-header.webp')"
+    >
+      <mat-card-title class="card-hero__title">Atividades Médicas</mat-card-title>
+    </a>
+
+    <mat-card-content></mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions class="flex justify-end">
+      <a routerLink="/atividades-medicas" mat-icon-button matTooltip="Ir para Atividades Médicas">
+        <mat-icon>arrow_outward</mat-icon>
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</div>

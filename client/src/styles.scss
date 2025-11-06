@@ -12,6 +12,45 @@ html {
       density: 0,
     )
   );
+
+  .nav-link-active {
+    @include mat.list-overrides(
+      (
+        active-indicator-color: var(--mat-sys-primary-container),
+        list-item-focus-state-layer-color: var(--mat-sys-primary-container),
+        list-item-selected-container-color: var(--mat-sys-primary-container),
+        list-item-container-color: var(--mat-sys-primary-container),
+      )
+    );
+  }
+
+  .notificacao-sucesso {
+    @include mat.snack-bar-overrides(
+      (
+        button-color: var(--mat-sys-surface),
+        container-color: var(--mat-sys-primary),
+      )
+    );
+  }
+
+  .notificacao-aviso {
+    @include mat.snack-bar-overrides(
+      (
+        button-color: var(--mat-sys-primary),
+        container-color: var(--mat-sys-surface),
+        supporting-text-color: var(--mat-sys-on-surface),
+      )
+    );
+  }
+
+  .notificacao-erro {
+    @include mat.snack-bar-overrides(
+      (
+        button-color: var(--mat-sys-surface),
+        container-color: var(--mat-sys-error),
+      )
+    );
+  }
 }
 
 body {
@@ -36,4 +75,57 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+// Tailwind Override
+@media screen and (min-width: 660px) {
+  .card-column {
+    flex: 0 0 330px;
+    max-width: 330px;
+  }
+}
+
+// Material Override
+.classroom-card {
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .card-hero {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 4;
+    background: center / cover no-repeat var(--hero-url, url('/img/card-header.jpg'));
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.6) 100%);
+    }
+
+    &__title {
+      position: absolute;
+      font-weight: 500;
+      left: 16px;
+      top: 16px;
+      color: #fff;
+      z-index: 1;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  mat-card-content {
+    min-height: 150px;
+  }
+
+  .card-actions {
+    padding: 4px 8px;
+    .spacer {
+      flex: 1 1 auto;
+    }
+  }
 }

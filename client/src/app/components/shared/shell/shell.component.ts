@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 // import { UsuarioAutenticadoModel } from '../../auth/auth.models';
 
@@ -27,7 +27,9 @@ import { RouterLink } from '@angular/router';
     MatMenuModule,
     AsyncPipe,
     RouterLink,
-  ],
+    RouterOutlet,
+    RouterLinkActive
+],
 })
 export class ShellComponent {
   private breakpointObserver = inject(BreakpointObserver);

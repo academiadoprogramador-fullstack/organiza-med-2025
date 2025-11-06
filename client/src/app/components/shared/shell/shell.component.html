@@ -28,7 +28,7 @@
 
     <mat-nav-list>
       @for (item of itensNavbar; track $index) {
-      <a mat-list-item [routerLink]="item.link">
+      <a mat-list-item [routerLink]="item.link" routerLinkActive="nav-link-active">
         <mat-icon class="material-icons-outlined" matListItemIcon>{{ item.icone }}</mat-icon>
         {{ item.titulo }}
       </a>
@@ -71,7 +71,7 @@
 
     <!-- Add Content Here -->
     <div class="px-4">
-      <ng-content></ng-content>
+      <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
