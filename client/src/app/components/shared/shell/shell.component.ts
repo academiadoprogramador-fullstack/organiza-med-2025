@@ -50,15 +50,15 @@ export class ShellComponent {
 
   public itensNavbar = [
     { titulo: 'Início', icone: 'home', link: '/inicio' },
-    { titulo: 'Médicos', icone: 'masks', link: '/categorias' },
-    { titulo: 'Pacientes', icone: 'personal_injury', link: '/notas' },
-    { titulo: 'Atividades Médicas', icone: 'medical_services', link: '/notas' },
+    { titulo: 'Médicos', icone: 'masks', link: '/medicos' },
+    { titulo: 'Pacientes', icone: 'personal_injury', link: '/pacientes' },
+    { titulo: 'Atividades Médicas', icone: 'medical_services', link: '/atividades-medicas' },
   ];
 
   public logout() {
     const sairObserver: PartialObserver<null> = {
       error: (err) => this.notificacaoService.erro(err.message),
-      complete: () => this.router.navigate(['/auth/login']),
+      complete: () => this.router.navigate(['/auth', 'login']),
     };
 
     this.authService.sair().subscribe(sairObserver);
