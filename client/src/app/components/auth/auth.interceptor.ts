@@ -4,7 +4,7 @@ import { HttpErrorResponse, HttpHandlerFn, HttpRequest } from '@angular/common/h
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { mapearErrosApi } from '../shared/mapear-resposta-api';
+import { mapearRespostaErroApi } from '../../util/mapear-resposta-erro-api';
 import { NotificacaoService } from '../shared/notificacao/notificacao.service';
 import { AuthService } from './auth.service';
 
@@ -16,7 +16,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn) 
   return authService.accessToken$.pipe(
     take(1),
     switchMap((accessToken) => {
-      if (!accessToken) return next(req).pipe(catchError(mapearErrosApi));
+      if (!accessToken) return next(req).pipe(catchError(mapearRespostaErroApi));
 
       const requisicaoClonada = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${accessToken.chave}`),
@@ -32,7 +32,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn) 
             router.navigate(['/auth', 'login']);
           }
 
-          return mapearErrosApi(err);
+          return mapearRespostaErroApi(err);
         })
       );
     })

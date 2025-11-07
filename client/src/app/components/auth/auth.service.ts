@@ -17,8 +17,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
-import { mapearRespostaApi } from '../shared/mapear-resposta-api';
-import { RespostaApiModel } from '../shared/resposta-api.model';
+import { mapearRespostaApi } from '../../util/mapear-resposta-api';
+import { RespostaApiModel } from '../../util/resposta-api.model';
 import { AccessTokenModel, LoginModel, RegistroModel } from './auth.models';
 
 @Injectable()
