@@ -2,11 +2,8 @@ import { map, of, take } from 'rxjs';
 
 import { isPlatformBrowser } from '@angular/common';
 import {
-  ApplicationConfig,
-  inject,
-  PLATFORM_ID,
-  provideBrowserGlobalErrorListeners,
-  provideZonelessChangeDetection,
+    ApplicationConfig, inject, PLATFORM_ID, provideBrowserGlobalErrorListeners,
+    provideZonelessChangeDetection
 } from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { CanActivateFn, provideRouter, Router, Routes } from '@angular/router';
@@ -51,12 +48,18 @@ export const routes: Routes = [
       {
         path: 'auth',
         loadChildren: () => import('./components/auth/auth.routes').then((r) => r.authRoutes),
-        canActivate: [usuarioDesconhecidoGuard],
+        canMatch: [usuarioDesconhecidoGuard],
       },
       {
         path: 'inicio',
         loadComponent: () => import('./components/inicio/inicio').then((c) => c.Inicio),
-        canActivate: [usuarioAutenticadoGuard],
+        canMatch: [usuarioAutenticadoGuard],
+      },
+      {
+        path: 'medicos',
+        loadChildren: () =>
+          import('./components/medicos/medico.routes').then((c) => c.medicoRoutes),
+        canMatch: [usuarioAutenticadoGuard],
       },
     ],
   },
