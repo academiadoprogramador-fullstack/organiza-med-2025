@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, PartialObserver } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -10,9 +10,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-// import { UsuarioAutenticadoModel } from '../../auth/auth.models';
+import { AuthService } from '../../auth/auth.service';
+import { NotificacaoService } from '../notificacao/notificacao.service';
 
 @Component({
   selector: 'app-shell',
@@ -28,11 +29,17 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     AsyncPipe,
     RouterLink,
     RouterOutlet,
-    RouterLinkActive
-],
+    RouterLinkActive,
+  ],
 })
 export class ShellComponent {
-  private breakpointObserver = inject(BreakpointObserver);
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
+  protected readonly router = inject(Router);
+  protected readonly authService = inject(AuthService);
+  protected readonly notificacaoService = inject(NotificacaoService);
+
+  protected readonly accessToken$ = this.authService.accessToken$;
 
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Handset])
@@ -48,6 +55,12 @@ export class ShellComponent {
     { titulo: 'Atividades Médicas', icone: 'medical_services', link: '/notas' },
   ];
 
-  // @Input({ required: true }) usuarioAutenticado!: UsuarioAutenticadoModel;
-  // @Output() logoutRequisitado = new EventEmitter<void>();
+  public logout() {
+    const sairObserver: PartialObserver<null> = {
+      error: (err) => this.notificacaoService.erro(err.message),
+      complete: () => this.router.navigate(['/auth/login']),
+    };
+
+    this.authService.sair().subscribe(sairObserver);
+  }
 }

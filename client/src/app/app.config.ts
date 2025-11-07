@@ -1,22 +1,62 @@
+import { map, of, take } from 'rxjs';
+
+import { isPlatformBrowser } from '@angular/common';
 import {
   ApplicationConfig,
+  inject,
+  PLATFORM_ID,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideRouter, Routes } from '@angular/router';
+import { CanActivateFn, provideRouter, Router, Routes } from '@angular/router';
 
+import { provideAuth } from './components/auth/auth.provider';
+import { AuthService } from './components/auth/auth.service';
+import { provideNotifications } from './components/shared/notificacao/notificacao.provider';
 import { ShellComponent } from './components/shared/shell/shell.component';
+
+const usuarioDesconhecidoGuard: CanActivateFn = () => {
+  const platformId = inject(PLATFORM_ID);
+  if (!isPlatformBrowser(platformId)) return of(true);
+
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  return authService.accessToken$.pipe(
+    take(1),
+    map((token) => (!token ? true : router.createUrlTree(['/inicio'])))
+  );
+};
+
+const usuarioAutenticadoGuard: CanActivateFn = () => {
+  const platformId = inject(PLATFORM_ID);
+  if (!isPlatformBrowser(platformId)) return of(true);
+
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  return authService.accessToken$.pipe(
+    take(1),
+    map((token) => (token ? true : router.createUrlTree(['/auth/login'])))
+  );
+};
 
 export const routes: Routes = [
   {
     path: '',
     component: ShellComponent,
     children: [
-      { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+      { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+      {
+        path: 'auth',
+        loadChildren: () => import('./components/auth/auth.routes').then((r) => r.authRoutes),
+        canActivate: [usuarioDesconhecidoGuard],
+      },
       {
         path: 'inicio',
         loadComponent: () => import('./components/inicio/inicio').then((c) => c.Inicio),
+        canActivate: [usuarioAutenticadoGuard],
       },
     ],
   },
@@ -28,5 +68,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
+    provideNotifications(),
+    provideAuth(),
   ],
 };
