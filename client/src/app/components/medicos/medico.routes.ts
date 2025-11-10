@@ -8,7 +8,7 @@ import { ListarMedicos } from './listar/listar-medicos';
 import { MedicoService } from './medico.service';
 
 export const listarMedicosResolver = () => {
-  return inject(MedicoService).selecionarTodas();
+  return inject(MedicoService).selecionarTodos();
 };
 
 export const detalhesMedicoResolver = (route: ActivatedRouteSnapshot) => {

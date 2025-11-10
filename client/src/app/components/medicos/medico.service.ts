@@ -7,8 +7,13 @@ import { environment } from '../../../environments/environment';
 import { mapearRespostaApi } from '../../util/mapear-resposta-api';
 import { RespostaApiModel } from '../../util/resposta-api.model';
 import {
-    CadastrarMedicoModel, CadastrarMedicoResponseModel, DetalhesMedicoModel, EditarMedicoModel,
-    EditarMedicoResponseModel, ListarMedicosApiResponseModel, ListarMedicosModel
+  CadastrarMedicoModel,
+  CadastrarMedicoResponseModel,
+  DetalhesMedicoModel,
+  EditarMedicoModel,
+  EditarMedicoResponseModel,
+  ListarMedicosApiResponseModel,
+  ListarMedicosModel,
 } from './medico.models';
 
 @Injectable()
@@ -47,7 +52,7 @@ export class MedicoService {
       .pipe(map(mapearRespostaApi<DetalhesMedicoModel>));
   }
 
-  public selecionarTodas(): Observable<ListarMedicosModel[]> {
+  public selecionarTodos(): Observable<ListarMedicosModel[]> {
     return this.http.get<RespostaApiModel>(this.apiUrl).pipe(
       map(mapearRespostaApi<ListarMedicosApiResponseModel>),
       map((res) => res.registros)
