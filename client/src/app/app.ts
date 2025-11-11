@@ -6,8 +6,9 @@ import { ShellComponent } from './components/shared/shell/shell.component';
 @Component({
   selector: 'app-root',
   imports: [ShellComponent, RouterOutlet],
-  template: ` <app-shell>
-    <router-outlet></router-outlet>
-  </app-shell>`,
+  template: ` <!-- App shell -->
+    <app-shell>
+      <router-outlet></router-outlet>
+    </app-shell>`,
 })
 export class App {}

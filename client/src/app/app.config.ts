@@ -1,14 +1,55 @@
+import { map, of, take } from 'rxjs';
+
+import { isPlatformBrowser } from '@angular/common';
 import {
-  ApplicationConfig,
-  provideBrowserGlobalErrorListeners,
-  provideZonelessChangeDetection,
+    ApplicationConfig, inject, PLATFORM_ID, provideBrowserGlobalErrorListeners,
+    provideZonelessChangeDetection
 } from '@angular/core';
-import { provideRouter, Routes } from '@angular/router';
+import { CanActivateFn, provideRouter, Router, Routes } from '@angular/router';
 
 import { provideAuth } from './components/auth/auth.provider';
+import { AuthService } from './components/auth/auth.service';
 import { provideNotifications } from './components/shared/notificacao/notificacao.provider';
 
-const routes: Routes = [];
+const usuarioDesconhecidoGuard: CanActivateFn = () => {
+  const platformId = inject(PLATFORM_ID);
+  if (!isPlatformBrowser(platformId)) return of(true);
+
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  return authService.accessToken$.pipe(
+    take(1),
+    map((token) => (!token ? true : router.createUrlTree(['/inicio'])))
+  );
+};
+
+const usuarioAutenticadoGuard: CanActivateFn = () => {
+  const platformId = inject(PLATFORM_ID);
+  if (!isPlatformBrowser(platformId)) return of(true);
+
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  return authService.accessToken$.pipe(
+    take(1),
+    map((token) => (token ? true : router.createUrlTree(['/auth/login'])))
+  );
+};
+
+const routes: Routes = [
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+  {
+    path: 'auth',
+    loadChildren: () => import('./components/auth/auth.routes').then((r) => r.authRoutes),
+    canMatch: [usuarioDesconhecidoGuard],
+  },
+  {
+    path: 'inicio',
+    loadComponent: () => import('./components/inicio/inicio').then((c) => c.Inicio),
+    canMatch: [usuarioAutenticadoGuard],
+  },
+];
 
 export const appConfig: ApplicationConfig = {
   providers: [

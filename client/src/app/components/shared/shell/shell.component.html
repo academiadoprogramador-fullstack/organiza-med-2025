@@ -1,5 +1,4 @@
 @if (accessToken$ | async; as accessToken) {
-
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     #drawer
@@ -76,8 +75,4 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-} @else {
-<div class="px-4">
-  <ng-content></ng-content>
-</div>
 }
