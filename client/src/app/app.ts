@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+import { ShellComponent } from './components/shared/shell/shell.component';
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  template: `<h1 class="font-bold">Hello World</h1>`,
+  imports: [ShellComponent, RouterOutlet],
+  template: ` <app-shell>
+    <router-outlet></router-outlet>
+  </app-shell>`,
 })
 export class App {}
