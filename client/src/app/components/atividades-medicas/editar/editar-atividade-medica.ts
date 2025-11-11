@@ -1,5 +1,5 @@
 import { parse } from 'date-fns';
-import { filter, map, Observer, shareReplay } from 'rxjs';
+import { filter, map, Observer, shareReplay, switchMap, take, tap } from 'rxjs';
 
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
@@ -14,17 +14,17 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { ListarMedicosModel } from '../../medicos/medico.models';
 import { MedicoService } from '../../medicos/medico.service';
-import { ListarPacientesModel } from '../../pacientes/paciente.models';
 import { PacienteService } from '../../pacientes/paciente.service';
 import { NotificacaoService } from '../../shared/notificacao/notificacao.service';
 import {
-    CadastrarAtividadeMedicaModel, CadastrarAtividadeMedicaResponseModel, TipoAtividadeMedicaEnum
+    DetalhesAtividadeMedicaModel, EditarAtividadeMedicaModel, EditarAtividadeMedicaResponseModel,
+    TipoAtividadeMedicaEnum
 } from '../atividade-medica.models';
 import { AtividadeMedicaService } from '../atividade-medica.service';
 import { apenasUmMedicoPorConsulta } from '../validators/apenas-um-medico-por-consulta';
 
 @Component({
-  selector: 'app-cadastrar-atividade-medica',
+  selector: 'app-editar-atividade-medica',
   imports: [
     MatCardModule,
     MatButtonModule,
@@ -36,9 +36,9 @@ import { apenasUmMedicoPorConsulta } from '../validators/apenas-um-medico-por-co
     AsyncPipe,
     ReactiveFormsModule,
   ],
-  templateUrl: './cadastrar-atividade-medica.html',
+  templateUrl: './editar-atividade-medica.html',
 })
-export class CadastrarAtividadeMedica {
+export class EditarAtividadeMedica {
   protected readonly formBuilder = inject(FormBuilder);
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
@@ -52,7 +52,6 @@ export class CadastrarAtividadeMedica {
       inicio: [new Date().toLocaleString('pt-Br'), [Validators.required]],
       termino: [new Date().toLocaleString('pt-Br'), [Validators.required]],
       tipoAtividade: [TipoAtividadeMedicaEnum.Consulta, [Validators.required]],
-      pacienteId: [undefined, [Validators.required]],
       medicos: [[], [Validators.required]],
     },
     { validators: [apenasUmMedicoPorConsulta] }
@@ -66,19 +65,9 @@ export class CadastrarAtividadeMedica {
     return this.atividadeMedicaForm.get('termino');
   }
 
-  get tipoAtividade() {
-    return this.atividadeMedicaForm.get('tipoAtividade');
-  }
-
-  get pacienteId() {
-    return this.atividadeMedicaForm.get('pacienteId');
-  }
-
   get medicos() {
     return this.atividadeMedicaForm.get('medicos');
   }
-
-  protected readonly tiposAtividadeMedica = Object.values(TipoAtividadeMedicaEnum);
 
   protected readonly medicos$ = this.route.data.pipe(
     filter((data) => data['medicos']),
@@ -86,17 +75,24 @@ export class CadastrarAtividadeMedica {
     shareReplay({ bufferSize: 1, refCount: true })
   );
 
-  protected readonly pacientes$ = this.route.data.pipe(
-    filter((data) => data['pacientes']),
-    map((data) => data['pacientes'] as ListarPacientesModel[]),
+  protected readonly atividadeMedica$ = this.route.data.pipe(
+    filter((data) => data['atividadeMedica']),
+    map((data) => data['atividadeMedica'] as DetalhesAtividadeMedicaModel),
+    tap((atividadeMedica) =>
+      this.atividadeMedicaForm.setValue({
+        inicio: new Date(atividadeMedica.inicio).toLocaleString('pt-Br'),
+        termino: new Date(atividadeMedica.termino).toLocaleString('pt-Br'),
+        tipoAtividade: atividadeMedica.tipoAtividade,
+        medicos: atividadeMedica.medicos.map((x) => x.id),
+      })
+    ),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 
-  public cadastrar() {
+  public editar() {
     if (this.atividadeMedicaForm.invalid) return;
 
-    const atividadeMedicaModel: CadastrarAtividadeMedicaModel = {
-      ...this.atividadeMedicaForm.value,
+    const atividadeMedicaModel: EditarAtividadeMedicaModel = {
       inicio: parse(this.inicio?.value, 'dd/MM/yyyy, HH:mm:ss', new Date().toISOString()),
       termino: parse(this.termino?.value, 'dd/MM/yyyy, HH:mm:ss', new Date().toISOString()),
       medicos: Array.isArray(this.medicos?.value)
@@ -104,15 +100,22 @@ export class CadastrarAtividadeMedica {
         : [this.medicos?.value],
     };
 
-    const cadastroObserver: Observer<CadastrarAtividadeMedicaResponseModel> = {
+    const edicaoObserver: Observer<EditarAtividadeMedicaResponseModel> = {
       next: () =>
         this.notificacaoService.sucesso(
-          `A atividade médica com início em ${atividadeMedicaModel.inicio.toLocaleDateString()} foi cadastrada com sucesso!`
+          `A atividade médica com início em ${atividadeMedicaModel.inicio.toLocaleDateString()} foi editada com sucesso!`
         ),
       error: (err) => this.notificacaoService.erro(err),
       complete: () => this.router.navigate(['/atividades-medicas']),
     };
 
-    this.atividadeMedicaService.cadastrar(atividadeMedicaModel).subscribe(cadastroObserver);
+    this.atividadeMedica$
+      .pipe(
+        take(1),
+        switchMap((atividadeMedica) =>
+          this.atividadeMedicaService.editar(atividadeMedica.id, atividadeMedicaModel)
+        )
+      )
+      .subscribe(edicaoObserver);
   }
 }

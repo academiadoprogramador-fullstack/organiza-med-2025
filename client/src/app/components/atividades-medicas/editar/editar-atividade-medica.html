@@ -1,13 +1,14 @@
+@if (atividadeMedica$ | async; as atividadeMedica) {
 <section class="mx-auto max-w-4xl px-4 py-6">
   <div>
-    <h2 class="text-2xl font-semibold">Cadastro de Atividade Médica</h2>
+    <h2 class="text-2xl font-semibold">Edição de Atividade Médica</h2>
     <hr class="my-4 border-muted/30" />
 
     <mat-card class="p-4 rounded-2xl shadow-sm">
-      <form [formGroup]="atividadeMedicaForm" (ngSubmit)="cadastrar()">
+      <form [formGroup]="atividadeMedicaForm" (ngSubmit)="editar()">
         <mat-card-header>
           <mat-card-title class="text-lg font-medium">
-            Preencha o formulário de cadastro
+            Preencha o formulário de edição
           </mat-card-title>
         </mat-card-header>
 
@@ -35,32 +36,6 @@
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="w-full">
-            <mat-label>Tipo de Atividade</mat-label>
-            <mat-select formControlName="tipoAtividade">
-              @for (tipo of tiposAtividadeMedica; track $index) {
-              <mat-option [value]="tipo">{{ tipo }}</mat-option>
-              }
-            </mat-select>
-
-            @if (tipoAtividade?.errors?.['required']) {
-            <mat-error>O tipo da atividade médica é obrigatório.</mat-error>
-            }
-          </mat-form-field>
-
-          <mat-form-field appearance="fill" class="w-full">
-            <mat-label>Paciente</mat-label>
-            <mat-select formControlName="pacienteId">
-              @for (paciente of pacientes$ | async; track $index) {
-              <mat-option [value]="paciente.id">{{ paciente.nome }}</mat-option>
-              }
-            </mat-select>
-
-            @if (pacienteId?.errors?.['required']) {
-            <mat-error>O paciente da atividade médica é obrigatório.</mat-error>
-            }
-          </mat-form-field>
-
-          <mat-form-field appearance="fill" class="w-full">
             <mat-label>Médico(s)</mat-label>
             <mat-select formControlName="medicos" multiple>
               @for (medico of medicos$ | async; track $index) {
@@ -68,7 +43,7 @@
               }
             </mat-select>
 
-            @if (medicos?.hasError('required')) {
+            @if (medicos?.errors?.['required']) {
             <mat-error>O médico da atividade médica é obrigatório.</mat-error>
             }
           </mat-form-field>
@@ -91,3 +66,5 @@
     </mat-card>
   </div>
 </section>
+
+}

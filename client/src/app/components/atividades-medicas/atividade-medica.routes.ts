@@ -5,6 +5,8 @@ import { MedicoService } from '../medicos/medico.service';
 import { PacienteService } from '../pacientes/paciente.service';
 import { AtividadeMedicaService } from './atividade-medica.service';
 import { CadastrarAtividadeMedica } from './cadastrar/cadastrar-atividade-medica';
+import { EditarAtividadeMedica } from './editar/editar-atividade-medica';
+import { ExcluirAtividadeMedica } from './excluir/excluir-atividade-medica';
 import { ListarAtividadesMedicas } from './listar/listar-atividades-medicas';
 
 export const listarAtividadesMedicasResolver = () => {
@@ -43,16 +45,19 @@ export const atividadeMedicaRoutes: Routes = [
         component: CadastrarAtividadeMedica,
         resolve: { pacientes: listarPacientesResolver, medicos: listarMedicosResolver },
       },
-      // {
-      //   path: 'editar/:id',
-      //   component: undefined,
-      //   resolve: { atividadeMedica: detalhesAtividadeMedicaResolver },
-      // },
-      // {
-      //   path: 'excluir/:id',
-      //   component: undefined,
-      //   resolve: { atividadeMedica: detalhesAtividadeMedicaResolver },
-      // },
+      {
+        path: 'editar/:id',
+        component: EditarAtividadeMedica,
+        resolve: {
+          medicos: listarMedicosResolver,
+          atividadeMedica: detalhesAtividadeMedicaResolver,
+        },
+      },
+      {
+        path: 'excluir/:id',
+        component: ExcluirAtividadeMedica,
+        resolve: { atividadeMedica: detalhesAtividadeMedicaResolver },
+      },
     ],
     providers: [PacienteService, MedicoService, AtividadeMedicaService],
   },
