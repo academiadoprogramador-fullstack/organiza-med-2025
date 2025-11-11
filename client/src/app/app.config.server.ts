@@ -1,10 +1,6 @@
 import { ApplicationConfig, mergeApplicationConfig } from '@angular/core';
 import {
-  provideServerRendering,
-  RenderMode,
-  ServerRoute,
-  withAppShell,
-  withRoutes,
+    provideServerRendering, RenderMode, ServerRoute, withAppShell, withRoutes
 } from '@angular/ssr';
 
 import { appConfig } from './app.config';
@@ -17,6 +13,10 @@ export const serverRoutes: ServerRoute[] = [
   },
   {
     path: 'pacientes/**',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'atividades-medicas/**',
     renderMode: RenderMode.Client,
   },
   {
