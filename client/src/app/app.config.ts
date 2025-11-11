@@ -2,8 +2,11 @@ import { map, of, take } from 'rxjs';
 
 import { isPlatformBrowser } from '@angular/common';
 import {
-    ApplicationConfig, inject, PLATFORM_ID, provideBrowserGlobalErrorListeners,
-    provideZonelessChangeDetection
+  ApplicationConfig,
+  inject,
+  PLATFORM_ID,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { CanActivateFn, provideRouter, Router, Routes } from '@angular/router';
@@ -61,10 +64,18 @@ export const routes: Routes = [
           import('./components/medicos/medico.routes').then((c) => c.medicoRoutes),
         canMatch: [usuarioAutenticadoGuard],
       },
-            {
+      {
         path: 'pacientes',
         loadChildren: () =>
           import('./components/pacientes/paciente.routes').then((c) => c.pacienteRoutes),
+        canMatch: [usuarioAutenticadoGuard],
+      },
+      {
+        path: 'atividades-medicas',
+        loadChildren: () =>
+          import('./components/atividades-medicas/atividade-medica.routes').then(
+            (c) => c.atividadeMedicaRoutes
+          ),
         canMatch: [usuarioAutenticadoGuard],
       },
     ],
