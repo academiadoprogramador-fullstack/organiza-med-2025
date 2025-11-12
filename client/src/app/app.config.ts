@@ -31,6 +31,7 @@ const usuarioAutenticadoGuard: CanActivateFn = () => {
     map((token) => (token ? true : router.createUrlTree(['/auth/login'])))
   );
 };
+
 const routes: Routes = [
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
   {
@@ -41,6 +42,11 @@ const routes: Routes = [
   {
     path: 'inicio',
     loadComponent: () => import('./components/inicio/inicio').then((c) => c.Inicio),
+    canMatch: [usuarioAutenticadoGuard],
+  },
+  {
+    path: 'medicos',
+    loadChildren: () => import('./components/medicos/medico.routes').then((c) => c.medicoRoutes),
     canMatch: [usuarioAutenticadoGuard],
   },
 ];
