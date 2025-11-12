@@ -1,9 +1,10 @@
-import { map, of, take } from 'rxjs';
+import { map, take } from 'rxjs';
 
-import { isPlatformBrowser } from '@angular/common';
 import {
-    ApplicationConfig, inject, PLATFORM_ID, provideBrowserGlobalErrorListeners,
-    provideZonelessChangeDetection
+  ApplicationConfig,
+  inject,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import { CanActivateFn, provideRouter, Router, Routes } from '@angular/router';
 
@@ -12,9 +13,6 @@ import { AuthService } from './components/auth/auth.service';
 import { provideNotifications } from './components/shared/notificacao/notificacao.provider';
 
 const usuarioDesconhecidoGuard: CanActivateFn = () => {
-  const platformId = inject(PLATFORM_ID);
-  if (!isPlatformBrowser(platformId)) return of(true);
-
   const authService = inject(AuthService);
   const router = inject(Router);
 
@@ -25,9 +23,6 @@ const usuarioDesconhecidoGuard: CanActivateFn = () => {
 };
 
 const usuarioAutenticadoGuard: CanActivateFn = () => {
-  const platformId = inject(PLATFORM_ID);
-  if (!isPlatformBrowser(platformId)) return of(true);
-
   const authService = inject(AuthService);
   const router = inject(Router);
 
@@ -36,7 +31,6 @@ const usuarioAutenticadoGuard: CanActivateFn = () => {
     map((token) => (token ? true : router.createUrlTree(['/auth/login'])))
   );
 };
-
 const routes: Routes = [
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
   {
