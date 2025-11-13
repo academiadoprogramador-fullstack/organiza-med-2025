@@ -1,10 +1,7 @@
 import { map, take } from 'rxjs';
 
 import {
-  ApplicationConfig,
-  inject,
-  provideBrowserGlobalErrorListeners,
-  provideZonelessChangeDetection,
+    ApplicationConfig, inject, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection
 } from '@angular/core';
 import { CanActivateFn, provideRouter, Router, Routes } from '@angular/router';
 
@@ -53,6 +50,12 @@ const routes: Routes = [
     path: 'pacientes',
     loadChildren: () =>
       import('./components/pacientes/paciente.routes').then((c) => c.pacienteRoutes),
+    canMatch: [usuarioAutenticadoGuard],
+  },
+    {
+    path: 'atividades-medicas',
+    loadChildren: () =>
+      import('./components/atividades-medicas/atividade-medica.routes').then((c) => c.atividadeMedicaRoutes),
     canMatch: [usuarioAutenticadoGuard],
   },
 ];
