@@ -24,7 +24,6 @@ import {
 } from '../atividade-medica.models';
 import { AtividadeMedicaService } from '../atividade-medica.service';
 import { apenasUmMedicoPorConsulta } from '../validators/apenas-um-medico-por-consulta';
-// import { apenasUmMedicoPorConsulta } from '../validators/apenas-um-medico-por-consulta';
 
 @Component({
   selector: 'app-cadastrar-atividade-medica',
