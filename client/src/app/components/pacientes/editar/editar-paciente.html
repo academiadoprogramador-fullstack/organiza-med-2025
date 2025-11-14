@@ -24,7 +24,7 @@
             }
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="w-full">
+          <mat-form-field appearance="fill" class="w-full" [floatLabel]="'always'">
             <mat-label>CPF do Paciente</mat-label>
             <input
               formControlName="cpf"
@@ -41,7 +41,7 @@
             }
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="w-full">
+          <mat-form-field appearance="fill" class="w-full" [floatLabel]="'always'">
             <mat-label>Email do Paciente</mat-label>
             <input
               formControlName="email"
@@ -49,6 +49,7 @@
               type="text"
               mask="A*@A*.SSS"
               [dropSpecialCharacters]="false"
+              [validation]="false"
             />
 
             @if (email?.errors?.['required']) {
@@ -58,7 +59,7 @@
             }
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="w-full">
+          <mat-form-field appearance="fill" class="w-full" [floatLabel]="'always'">
             <mat-label>Telefone do Paciente</mat-label>
             <input
               formControlName="telefone"
