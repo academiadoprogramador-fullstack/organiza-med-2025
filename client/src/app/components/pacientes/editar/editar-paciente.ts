@@ -17,6 +17,7 @@ import {
   EditarPacienteResponseModel,
 } from '../paciente.models';
 import { PacienteService } from '../paciente.service';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-editar-paciente',
@@ -29,6 +30,7 @@ import { PacienteService } from '../paciente.service';
     RouterLink,
     AsyncPipe,
     ReactiveFormsModule,
+    NgxMaskDirective
   ],
   templateUrl: './editar-paciente.html',
 })

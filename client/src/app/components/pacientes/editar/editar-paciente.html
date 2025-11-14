@@ -26,7 +26,13 @@
 
           <mat-form-field appearance="fill" class="w-full">
             <mat-label>CPF do Paciente</mat-label>
-            <input formControlName="cpf" matInput type="text" />
+            <input
+              formControlName="cpf"
+              matInput
+              type="text"
+              mask="000.000.000-00"
+              [dropSpecialCharacters]="false"
+            />
 
             @if (cpf?.errors?.['required']) {
             <mat-error>O CPF do paciente é obrigatório.</mat-error>
@@ -37,7 +43,13 @@
 
           <mat-form-field appearance="fill" class="w-full">
             <mat-label>Email do Paciente</mat-label>
-            <input formControlName="email" matInput type="text" />
+            <input
+              formControlName="email"
+              matInput
+              type="text"
+              mask="A*@A*.SSS"
+              [dropSpecialCharacters]="false"
+            />
 
             @if (email?.errors?.['required']) {
             <mat-error>O email do paciente é obrigatório.</mat-error>
@@ -48,7 +60,13 @@
 
           <mat-form-field appearance="fill" class="w-full">
             <mat-label>Telefone do Paciente</mat-label>
-            <input formControlName="telefone" matInput type="text" />
+            <input
+              formControlName="telefone"
+              matInput
+              type="text"
+              mask="(00) 90000-0000"
+              [dropSpecialCharacters]="false"
+            />
 
             @if (telefone?.errors?.['required']) {
             <mat-error>O telefone do paciente é obrigatório.</mat-error>

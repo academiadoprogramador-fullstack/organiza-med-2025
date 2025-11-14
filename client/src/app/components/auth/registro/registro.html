@@ -12,7 +12,7 @@
         <mat-card-content class="mt-8">
           <mat-form-field class="w-full">
             <mat-label>Nome de Usuário</mat-label>
-            <input formControlName="userName" matInput type="text" autocomplete="name" />
+            <input formControlName="userName" matInput type="text" autocomplete="username" />
 
             @if (userName?.errors?.['required']) {
             <mat-error>O nome de usuário é obrigatório.</mat-error>
@@ -23,7 +23,14 @@
 
           <mat-form-field class="w-full mt-2">
             <mat-label>Email</mat-label>
-            <input formControlName="email" matInput type="email" autocomplete="email" />
+            <input
+              formControlName="email"
+              matInput
+              type="email"
+              autocomplete="email"
+              mask="A*@A*.SSS"
+              [dropSpecialCharacters]="false"
+            />
 
             @if (email?.errors?.['required']) {
             <mat-error>O email é obrigatório.</mat-error>

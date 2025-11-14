@@ -12,6 +12,7 @@ import { Router, RouterLink } from '@angular/router';
 import { NotificacaoService } from '../../shared/notificacao/notificacao.service';
 import { AccessTokenModel, RegistroModel } from '../auth.models';
 import { AuthService } from '../auth.service';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-registro',
@@ -23,6 +24,7 @@ import { AuthService } from '../auth.service';
     MatInputModule,
     RouterLink,
     ReactiveFormsModule,
+    NgxMaskDirective,
   ],
   templateUrl: './registro.html',
 })

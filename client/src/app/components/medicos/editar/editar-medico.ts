@@ -15,6 +15,7 @@ import {
     DetalhesMedicoModel, EditarMedicoModel, EditarMedicoResponseModel
 } from '../medico.models';
 import { MedicoService } from '../medico.service';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-editar-medico',
@@ -27,6 +28,7 @@ import { MedicoService } from '../medico.service';
     RouterLink,
     AsyncPipe,
     ReactiveFormsModule,
+    NgxMaskDirective
   ],
   templateUrl: './editar-medico.html',
 })

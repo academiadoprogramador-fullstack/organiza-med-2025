@@ -24,6 +24,7 @@ import {
 } from '../atividade-medica.models';
 import { AtividadeMedicaService } from '../atividade-medica.service';
 import { apenasUmMedicoPorConsulta } from '../validators/apenas-um-medico-por-consulta';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-cadastrar-atividade-medica',
@@ -37,6 +38,7 @@ import { apenasUmMedicoPorConsulta } from '../validators/apenas-um-medico-por-co
     RouterLink,
     AsyncPipe,
     ReactiveFormsModule,
+    NgxMaskDirective,
   ],
   templateUrl: './cadastrar-atividade-medica.html',
 })

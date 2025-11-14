@@ -25,7 +25,13 @@
 
           <mat-form-field appearance="fill" class="w-full">
             <mat-label>CRM do Médico</mat-label>
-            <input formControlName="crm" matInput type="text" />
+            <input
+              formControlName="crm"
+              matInput
+              type="text"
+              mask="00000-SS"
+              [dropSpecialCharacters]="false"
+            />
 
             @if (crm?.errors?.['required']) {
             <mat-error>O CRM do médico é obrigatório.</mat-error>

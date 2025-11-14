@@ -12,6 +12,7 @@ import { Router, RouterLink } from '@angular/router';
 import { NotificacaoService } from '../../shared/notificacao/notificacao.service';
 import { CadastrarPacienteModel, CadastrarPacienteResponseModel } from '../paciente.models';
 import { PacienteService } from '../paciente.service';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-cadastrar-paciente',
@@ -23,6 +24,7 @@ import { PacienteService } from '../paciente.service';
     MatInputModule,
     RouterLink,
     ReactiveFormsModule,
+    NgxMaskDirective
   ],
   templateUrl: './cadastrar-paciente.html',
 })

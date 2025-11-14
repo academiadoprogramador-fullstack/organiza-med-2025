@@ -19,7 +19,13 @@
 
           <mat-form-field appearance="fill" class="w-full">
             <mat-label>Início</mat-label>
-            <input formControlName="inicio" matInput type="datetime" />
+            <input
+              formControlName="inicio"
+              matInput
+              type="datetime"
+              mask="00/00/0000 00:00"
+              [dropSpecialCharacters]="false"
+            />
 
             @if (inicio?.hasError('required')) {
             <mat-error>O início da atividade médica é obrigatório.</mat-error>
@@ -28,7 +34,13 @@
 
           <mat-form-field appearance="fill" class="w-full">
             <mat-label>Término</mat-label>
-            <input formControlName="termino" matInput type="datetime" />
+            <input
+              formControlName="termino"
+              matInput
+              type="datetime"
+              mask="00/00/0000 00:00"
+              [dropSpecialCharacters]="false"
+            />
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="w-full">

@@ -9,6 +9,7 @@ import { ExcluirMedico } from './excluir/excluir-medico';
 // import { ExcluirMedico } from './excluir/excluir-medico';
 import { ListarMedicos } from './listar/listar-medicos';
 import { MedicoService } from './medico.service';
+import { provideNgxMask } from 'ngx-mask';
 
 export const listarMedicosResolver = () => {
   return inject(MedicoService).selecionarTodos();
@@ -48,6 +49,6 @@ export const medicoRoutes: Routes = [
         resolve: { medico: detalhesMedicoResolver },
       },
     ],
-    providers: [MedicoService],
+    providers: [MedicoService, provideNgxMask()],
   },
 ];

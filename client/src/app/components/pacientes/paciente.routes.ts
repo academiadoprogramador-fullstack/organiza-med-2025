@@ -6,6 +6,7 @@ import { EditarPaciente } from './editar/editar-paciente';
 import { ExcluirPaciente } from './excluir/excluir-paciente';
 import { ListarPacientes } from './listar/listar-pacientes';
 import { PacienteService } from './paciente.service';
+import { provideNgxMask } from 'ngx-mask';
 
 export const listarPacientesResolver = () => {
   return inject(PacienteService).selecionarTodos();
@@ -45,6 +46,6 @@ export const pacienteRoutes: Routes = [
         resolve: { paciente: detalhesPacienteResolver },
       },
     ],
-    providers: [PacienteService],
+    providers: [PacienteService, provideNgxMask()],
   },
 ];
