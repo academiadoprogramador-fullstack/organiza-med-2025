@@ -7,7 +7,7 @@ import { AtividadeMedicaService } from './atividade-medica.service';
 // import { CadastrarAtividadeMedica } from './cadastrar/cadastrar-atividade-medica';
 // import { EditarAtividadeMedica } from './editar/editar-atividade-medica';
 // import { ExcluirAtividadeMedica } from './excluir/excluir-atividade-medica';
-// import { ListarAtividadesMedicas } from './listar/listar-atividades-medicas';
+import { ListarAtividadesMedicas } from './listar/listar-atividades-medicas';
 
 export const listarAtividadesMedicasResolver = () => {
   return inject(AtividadeMedicaService).selecionarTodos();
@@ -35,11 +35,11 @@ export const atividadeMedicaRoutes: Routes = [
   {
     path: '',
     children: [
-      // {
-      //   path: '',
-      //   component: ListarAtividadesMedicas,
-      //   resolve: { atividadesMedicas: listarAtividadesMedicasResolver },
-      // },
+      {
+        path: '',
+        component: ListarAtividadesMedicas,
+        resolve: { atividadesMedicas: listarAtividadesMedicasResolver },
+      },
       // {
       //   path: 'cadastrar',
       //   component: CadastrarAtividadeMedica,
