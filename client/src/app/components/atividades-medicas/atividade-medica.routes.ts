@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, Routes } from '@angular/router';
 import { MedicoService } from '../medicos/medico.service';
 import { PacienteService } from '../pacientes/paciente.service';
 import { AtividadeMedicaService } from './atividade-medica.service';
-// import { CadastrarAtividadeMedica } from './cadastrar/cadastrar-atividade-medica';
+import { CadastrarAtividadeMedica } from './cadastrar/cadastrar-atividade-medica';
 // import { EditarAtividadeMedica } from './editar/editar-atividade-medica';
 // import { ExcluirAtividadeMedica } from './excluir/excluir-atividade-medica';
 import { ListarAtividadesMedicas } from './listar/listar-atividades-medicas';
@@ -40,11 +40,11 @@ export const atividadeMedicaRoutes: Routes = [
         component: ListarAtividadesMedicas,
         resolve: { atividadesMedicas: listarAtividadesMedicasResolver },
       },
-      // {
-      //   path: 'cadastrar',
-      //   component: CadastrarAtividadeMedica,
-      //   resolve: { pacientes: listarPacientesResolver, medicos: listarMedicosResolver },
-      // },
+      {
+        path: 'cadastrar',
+        component: CadastrarAtividadeMedica,
+        resolve: { pacientes: listarPacientesResolver, medicos: listarMedicosResolver },
+      },
       // {
       //   path: 'editar/:id',
       //   component: EditarAtividadeMedica,
